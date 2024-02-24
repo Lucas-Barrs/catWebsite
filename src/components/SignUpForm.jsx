@@ -30,9 +30,6 @@ const SignUpForm({setToken}) {
     setError(error.message);
     console.error(error);
   }}
-
-
-
   return (
   <>
     <h2>Sign Up!</h2>
@@ -52,6 +49,7 @@ const SignUpForm({setToken}) {
   </>
 );
 }
+
 async function authorize(token) {
     try{
       const response = await fetch(
@@ -67,12 +65,11 @@ async function authorize(token) {
       console.log(result)
       setSuccessMessage(result.message);
       setUsername(result.data.username)
+      
     } catch (error){
-
       setError(error.message);
       console.log(error)
-    }
-  }
+    }}; 
   export default function signupAndAuth = async () => {
     await signUpForm().then( async () => {
     await authorize();
