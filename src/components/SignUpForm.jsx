@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Button from '@mui/material/Button';
 
-export default function SignUpForm({setToken}) {
+const SignUpForm({setToken}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -31,7 +31,28 @@ export default function SignUpForm({setToken}) {
     console.error(error);
   }}
 
-  async function authorize(token) {
+
+
+  return (
+  <>
+    <h2>Sign Up!</h2>
+    {error && <p>{error}</p>}
+    <form onSubmit={handleSubmit}>
+      <label>
+        Username: <input value={username} onChange={(e) => setUsername(e.target.value)} />
+      </label>
+      <br></br>
+      <label>
+        Password:  <input value={password} onChange={(e) => setPassword(e.target.value)} />
+      </label>
+      <br></br>
+      <br></br>
+      <Button variant="contained">Submit</Button>
+    </form>
+  </>
+);
+}
+async function authorize(token) {
     try{
       const response = await fetch(
         'https://fsa-jwt-practice.herokuapp.com/authenticate',
@@ -52,23 +73,8 @@ export default function SignUpForm({setToken}) {
       console.log(error)
     }
   }
-
-  return (
-  <>
-    <h2>Sign Up!</h2>
-    {error && <p>{error}</p>}
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username: <input value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-      <br></br>
-      <label>
-        Password:  <input value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <br></br>
-      <br></br>
-      <Button variant="contained">Submit</Button>
-    </form>
-  </>
-);
+  export default function signupAndAuth = async () => {
+    await signUpForm().then( async () => {
+    await authorize();
+})
 }
